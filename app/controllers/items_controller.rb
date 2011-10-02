@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+
   # GET /items
   # GET /items.json
   def index
@@ -80,4 +81,5 @@ class ItemsController < ApplicationController
       format.json { head :ok }
     end
   end
+
 end

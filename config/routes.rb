@@ -5,6 +5,14 @@ Layouts::Application.routes.draw do
   resources :items
   root to: 'items#index'
 
+  get '/tags' => lambda { |env|
+    [
+      200,
+      {'Content-Type' => 'application/json'},
+      [Tag.search( Rack::Request.new(env).params['q'] ).to_json]
+    ]
+  }
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -9,3 +9,6 @@ ru:
       signup: 'Зарегистрироваться'
       signout: 'Выйти'
 
+  items:
+    form:
+      cancel: 'Отмена'

@@ -6,4 +6,32 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.tokeninput
 //= require_tree .
+
+
+$(document).ready(function () {
+
+  var inputs = $('input.autocomplete_with_tags');
+
+  function syncWithInput() {
+    inputs.each(function(index, input) {
+      var input = $(input), tags = input.tokenInput('get'), result = [];
+      console.log(tags);
+      for ( var i = tags.length - 1; i >= 0; i-- ) {
+        result.push(tags[i].name);
+      };
+
+      input.attr('value', result.join(','));
+    })
+  };
+
+  inputs.tokenInput('/tags', {
+    crossDomain: false,
+    preventDuplicates: true,
+    prePopulate: $("#book_author_tokens").data("pre"),
+    onAdd: function() { syncWithInput() },
+    onRemove: function() { syncWithInput() }
+  });
+});
+
