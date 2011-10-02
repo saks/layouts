@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Layouts</title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
+    <title><%= t '.title' %></title>
+    <%= stylesheet_link_tag    'application' %>
+    <%= javascript_include_tag 'application' %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div id="main">
+      <div id="header" class="container">
+        <%= link_to image_tag('logo.png', height: 45), root_path, class: 'logo' %>
+        <div class="user_stuff">
+          <ul>
+            <% if user_signed_in? %>
+              <li>
+                <%= link_to t('.signout'), destroy_user_session_path, :method => :delete, class: 'btn' %>
+              </li>
+            <% else %>
+              <li><%= link_to t('.signin'), new_user_session_path, class: 'btn' %></li>
+              <li><%= link_to t('.signup'), new_registration_path(:user), class: 'btn' %></li>
+            <% end %>
+          </ul>
+        </div>
 
-<%= yield %>
+        <div class="search">
+          <%= form_tag items_path, method: :get do %>
+            <%= hidden_field_tag 'search', 'true' %>
+            <%= text_field_tag 'search_term', params[:search_term], placeholder: t('.search_placeholder'), class: 'span7' %>
+          <% end %>
+        </div>
 
-</body>
+      </div>
+
+      <div id="site" class="container">
+        <div class="slider"><!-- TODO: slider --></div>
+        <%= yield %>
+      </div>
+
+      <div id="footer"></div>
+    </div>
+  </body>
 </html>

@@ -215,6 +215,9 @@ GEM
       polyglot (>= 0.3.1)
     turn (0.8.2)
       ansi (>= 1.2.2)
+    twitter-bootstrap-rails (0.0.5)
+      railties (~> 3.0)
+      thor (~> 0.14)
     tzinfo (0.3.30)
     uglifier (1.0.3)
       execjs (>= 0.3.0)
@@ -246,5 +249,6 @@ DEPENDENCIES
   rails (= 3.1.1.rc2)
   sass-rails
   turn
+  twitter-bootstrap-rails
   uglifier
   xml-simple
