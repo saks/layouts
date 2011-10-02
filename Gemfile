@@ -6,8 +6,14 @@ gem 'mongoid'
 gem 'mongoid-paperclip', require: 'mongoid_paperclip'
 gem 'bson_ext'
 
-gem 'devise'
 gem 'aws-s3', git: 'git://github.com/37signals/aws-s3.git', require: 'aws/s3'
+
+gem 'devise'
+gem 'omniauth'
+gem 'oa-facebook'
+gem 'oa-google-openid'
+gem 'oa-mailru_alexandrov'
+gem 'oa-vkontakte_alexandrov'
 
 gem 'xml-simple'
 
