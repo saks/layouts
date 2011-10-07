@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.1.rc2'
+gem 'rails', '3.1.1'
 
 gem 'mongoid'
 gem 'mongoid-paperclip', require: 'mongoid_paperclip'
@@ -20,14 +20,15 @@ gem 'xml-simple'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
+  gem 'sprockets'
   gem 'sass-rails'
-  gem 'compass',    git: 'git://github.com/saks/compass.git'
+  gem 'compass',    git: 'git://github.com/chriseppstein/compass.git'
   gem 'coffee-rails'
   gem 'uglifier'
 end
 
 gem 'jquery-rails'
-gem 'twitter-bootstrap-rails'
+gem 'compass_twitter_bootstrap'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -2,17 +2,13 @@
  * This is a manifest file that'll automatically include all the stylesheets available in this directory
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
- *
- *= require bootstrap-1.3.0
- *= require token-input
  *= require_self
+ *= require token-input
+ *= require libs
 */
-
 @import "compass";
 
-body {
-  background:#fff image-url('background-v2.png') 0 0 repeat-x;
-}
+body { background: #fff image-url('background-v2.png') 0 0 repeat-x; }
 
 #header {
   height: 91px;
