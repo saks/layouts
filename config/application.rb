@@ -51,5 +51,9 @@ module Layouts
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Replace test framework generators with rspec
+    config.generators.integration_tool :rspec
+    config.generators.test_framework :rspec
   end
 end
