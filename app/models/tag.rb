@@ -18,14 +18,16 @@ class Tag
     result
   end
 
-  def self.fix(string)
-    result = string.split(DELIMITER).map(&:strip).uniq
+  def self.split(string)
+    string.split(DELIMITER).map(&:strip).uniq.delete_if &:empty?
+  end
 
-    result.each do |tag|
+
+  # normalize and
+  def self.fix(string)
+    split(string).each do |tag|
       create(name: tag) unless exists?(conditions: {name: tag})
     end
-
-    result
   end
 
 end

@@ -17,9 +17,7 @@ $(document).ready(function () {
   function syncWithInput() {
     inputs.each(function(index, input) {
       var input = $(input), tags = input.tokenInput('get'), result = [];
-      for ( var i = tags.length - 1; i >= 0; i-- ) {
-        result.push(tags[i].name);
-      };
+      for ( var i = 0; i < tags.length; i++ ) result.push(tags[i].name);
 
       input.attr('value', result.join(','));
     })
@@ -45,6 +43,15 @@ $(document).ready(function () {
 
   $('.token-input-input-token-layouts input').blur(function() {
     $(this).parents('ul').removeClass('focus')
+  });
+
+
+
+
+  // handlers search from layout
+  $('.search .add-on').click(function() {
+    var query = $.param({search_term: $('#search_term').val(), is_search: 'true'});
+    document.location = '/items' + '?' + query;
   });
 });
 

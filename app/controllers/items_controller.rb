@@ -3,7 +3,12 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all
+    @items = if params[:search_term].present?
+      prepare_prepopulated_search_term
+      Item.search_by_tag params[:search_term]
+    else
+      Item.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -80,6 +85,12 @@ class ItemsController < ApplicationController
       format.html { redirect_to items_url }
       format.json { head :ok }
     end
+  end
+
+  protected
+
+  def prepare_prepopulated_search_term
+    params[:pre_search_term] = params[:search_term].split(',').map {|tag| {id: tag, name: tag}}.to_json
   end
 
 end

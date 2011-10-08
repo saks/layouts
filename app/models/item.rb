@@ -6,7 +6,7 @@ class Item
     medium: ["660x300#", :png],
   }
 
-  field :tags, type: 'Array', default: []
+  field :tags, type: Array, default: []
   field :name
 
   validates_attachment_presence :image
@@ -21,6 +21,10 @@ class Item
 
   def prepopulate_tags
     tags.map { |tag| {id: tag, name: tag} }
+  end
+
+  def self.search_by_tag(string)
+    where :tags.in => Tag.split(string)
   end
 
 end
