@@ -10,10 +10,10 @@ class Tag
     re = Regexp.new term, 'i'
 
     result = all.find_all { |tag| tag.name.match re }.map do |tag|
-      {id: tag.id, name: tag.name}
+      {id: tag.name, name: tag.name}
     end
 
-    result << {id: "CREATE_#{term}_END", name: term} if add_new
+    result << {id: term, name: term} if add_new
 
     result
   end

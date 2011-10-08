@@ -33,7 +33,6 @@ $(document).ready(function () {
       crossDomain: false,
       preventDuplicates: true,
       theme: 'layouts',
-      prePopulate: $("#book_author_tokens").data("pre"),
       onAdd: function() { syncWithInput() },
       onRemove: function() { syncWithInput() }
     });

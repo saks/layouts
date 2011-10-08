@@ -1,7 +1,10 @@
 <%= twitter_bootstrap_form_for @item do |f| %>
   <%= f.inputs 'Create' do %>
     <%= f.text_field :name, class: 'span7' %>
-    <%= f.text_field :tags, class: 'span7 autocomplete_with_tags', 'data-pre' => f.object.prepopulate_tags.to_json, 'data-queryParam' => 'from_create_q' %>
+    <%= f.text_field :tags,
+      'data-pre'        => f.object.prepopulate_tags.to_json,
+      'class'           => 'span7 autocomplete_with_tags',
+      'data-queryParam' => 'from_create_q' %>
     <%= f.file_field :image %>
 
     <%= f.actions do %>
