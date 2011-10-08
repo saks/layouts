@@ -29,6 +29,7 @@ end
 
 gem 'jquery-rails'
 gem 'compass_twitter_bootstrap'
+gem 'twitter_bootstrap_form_for'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

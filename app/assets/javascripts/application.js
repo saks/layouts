@@ -29,6 +29,7 @@ $(document).ready(function () {
   inputs.tokenInput('/tags', {
     crossDomain: false,
     preventDuplicates: true,
+    theme: 'layouts',
     prePopulate: $("#book_author_tokens").data("pre"),
     onAdd: function() { syncWithInput() },
     onRemove: function() { syncWithInput() }

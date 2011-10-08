@@ -233,6 +233,8 @@ GEM
       polyglot (>= 0.3.1)
     turn (0.8.2)
       ansi (>= 1.2.2)
+    twitter_bootstrap_form_for (1.0.1)
+      rails (~> 3)
     tzinfo (0.3.30)
     uglifier (1.0.3)
       execjs (>= 0.3.0)
@@ -270,5 +272,6 @@ DEPENDENCIES
   spork (> 0.9.0.rc)
   sprockets
   turn
+  twitter_bootstrap_form_for
   uglifier
   xml-simple

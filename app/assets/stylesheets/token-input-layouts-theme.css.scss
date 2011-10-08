@@ -1,0 +1,138 @@
+ul.token-input-list-layouts {
+    @include border-radius(3px);
+    display: inline-block;
+    border: 1px solid #ccc;
+    @include box-shadow(inset 0 1px 3px rgba(0, 0, 0, .1));
+    $transition: border linear .2s, box-shadow linear .2s;
+    @include transition($transition);
+
+    overflow: hidden;
+    width: 398px;
+    cursor: text;
+    font-size: 12px;
+    font-family: Verdana;
+    min-height: 1px;
+    z-index: 999;
+    margin: 0;
+    padding: 0;
+    background-color: $white;
+    list-style-type: none;
+    clear: left;
+}
+
+ul.token-input-list-layouts li input {
+    border: 0;
+    width: 100px;
+    padding: 3px 8px;
+    background-color: transparent;
+    margin: 3px 0 2px;
+    -webkit-appearance: caret;
+}
+
+li.token-input-token-layouts {
+    overflow: hidden;
+    margin: 2px 3px;
+    padding: 1px 3px;
+    color: $grayDark;
+    cursor: pointer;
+    font-size: 11px;
+    float: left;
+    white-space: nowrap;
+    background-color: #E4E4E4;
+    @include background-clip(padding-box);
+    @include background(linear-gradient(center bottom , #E4E4E4 0%, #EEEEEE 70%));
+    @include border-radius(3px);
+    border: 1px solid #B4B4B4;
+}
+
+li.token-input-token-layouts p {
+    display: inline;
+    padding: 0;
+    margin: 0;
+}
+
+li.token-input-token-layouts span {
+    color: $grayDark;
+    margin-left: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+// selected tag
+li.token-input-selected-token-layouts {
+    border: 1px solid $grayDark;
+    color: $white;
+    @include background(linear-gradient(center bottom , $gray 0%, lighten($black, 40%) 70%));
+}
+li.token-input-selected-token-layouts span {
+  color: $white;
+}
+
+li.token-input-input-token-layouts {
+    float: left;
+    margin: 0;
+    padding: 0;
+    height: 26px;
+    list-style-type: none;
+}
+
+div.token-input-dropdown-layouts {
+    position: absolute;
+    width: 398px;
+    background-color: #fff;
+    overflow: hidden;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    cursor: default;
+    font-size: 11px;
+    font-family: Verdana;
+    z-index: 1;
+}
+
+div.token-input-dropdown-layouts p {
+    margin: 0;
+    padding: 5px;
+    font-weight: bold;
+    color: $gray;
+}
+
+div.token-input-dropdown-layouts ul {
+    margin: 0;
+    padding: 0;
+}
+
+div.token-input-dropdown-layouts ul li {
+    background-color: #fff;
+    padding: 3px;
+    margin: 0;
+    list-style-type: none;
+}
+
+div.token-input-dropdown-layouts ul li.token-input-dropdown-item-layouts {
+    background-color: #fff;
+}
+
+div.token-input-dropdown-layouts ul li.token-input-dropdown-item2-layouts {
+    background-color: #fff;
+}
+
+div.token-input-dropdown-layouts ul li em {
+    font-weight: bold;
+    font-style: normal;
+}
+
+div.token-input-dropdown-layouts ul li.token-input-selected-dropdown-item-layouts {
+    background-color: $grayLighter;
+    color: $grayDark;
+}
+
+// input constructed by tokeninput
+input#token-input-item_tags {
+  padding: 1px 8px;
+  border-color: transparent;
+  box-shadow: none !important;
+  @include border-radius(0px);
+  border: none;
+  border-width: 0;
+}

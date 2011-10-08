@@ -4,9 +4,11 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
  *= require token-input
- *= require libs
 */
+@import "variables";
+@import "compass_twitter_bootstrap";
 @import "compass";
+@import "token-input-layouts-theme";
 
 body { background: #fff image-url('background-v2.png') 0 0 repeat-x; }
 
