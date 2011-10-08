@@ -194,6 +194,7 @@ GEM
       thor (~> 0.14.6)
     rake (0.9.2)
     rdoc (3.9.4)
+    redis (2.2.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec (2.6.0)
@@ -266,6 +267,7 @@ DEPENDENCIES
   oa-vkontakte_alexandrov
   omniauth
   rails (= 3.1.1)
+  redis
   rspec
   rspec-rails
   sass-rails

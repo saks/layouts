@@ -17,10 +17,18 @@ describe Tag do
     result.should == result_of_split
 
     result_of_split.each do |name|
-      Tag.exists?(conditions: {name: name}).should be true
+      Tag.exists?(name).should be true
     end
 
     Tag.count.should be 3
+  end
+
+  it "sorts search result" do
+    Tag.add 'aac'
+    Tag.add 'aab'
+    Tag.add 'aaa'
+
+    Tag.search('a').map {|t| t[:id]}.should == %w[aaa aab aac]
   end
 
 end

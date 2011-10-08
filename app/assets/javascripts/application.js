@@ -17,7 +17,7 @@ $(document).ready(function () {
   function syncWithInput() {
     inputs.each(function(index, input) {
       var input = $(input), tags = input.tokenInput('get'), result = [];
-      for ( var i = 0; i < tags.length; i++ ) result.push(tags[i].name);
+      for ( var i = 0; i < tags.length; i++ ) result.push(tags[i].id);
 
       input.attr('value', result.join(','));
     })
@@ -30,6 +30,7 @@ $(document).ready(function () {
       queryParam: input.data('queryparam'),
       crossDomain: false,
       preventDuplicates: true,
+      propertyToSearch: 'id',
       theme: 'layouts',
       onAdd: function() { syncWithInput() },
       onRemove: function() { syncWithInput() }

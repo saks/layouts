@@ -36,6 +36,7 @@ Spork.prefork do
 
     config.after(:each) do
       DatabaseCleaner.clean
+      REDIS.flushdb
     end
   end
 end

@@ -1,32 +1,47 @@
-#["Asian", "Contemporary", "Eclectic", "Mediterranean", "Modern", "Traditional", "Tropical", "Bathroom", "Bedroom", "Closet", "Dining Room", "Entry", "Exterior", "Family Room", "Hall", "Home Office", "Kids", "Kitchen", "Landscape", "Laundry Room", "Living Room", "Media Room", "Patio", "Pool", "Porch", "Powder Room", "Staircase", "Wine Cellar"]
-class Tag
-  include Mongoid::Document
-
-  field :name
-
+module Tag
+  KEY_NAME  = "tags-#{Rails.env}"
   DELIMITER = /\s?(?:,|;)\s?/
 
-  def self.search(term, add_new)
-    re = Regexp.new term, 'i'
+  class << self
+    def search(term, add_new = false)
+      re = Regexp.new term, 'i'
 
-    result = all.find_all { |tag| tag.name.match re }.map do |tag|
-      {id: tag.name, name: tag.name}
+      result = all.grep(re).map do |tag|
+        {id: tag}
+      end
+
+      result << {id: term} if add_new
+
+      result
     end
 
-    result << {id: term, name: term} if add_new
+    def split(string)
+      string.split(DELIMITER).map(&:strip).uniq.delete_if &:empty?
+    end
 
-    result
-  end
+    # normalize and
+    def fix(string)
+      split(string).each { |tag| add tag }
+    end
 
-  def self.split(string)
-    string.split(DELIMITER).map(&:strip).uniq.delete_if &:empty?
-  end
+    def add(tag)
+      REDIS.zincrby KEY_NAME, 1, tag
+    end
 
+    def all
+      REDIS.zrange KEY_NAME, 0, -1, withscores: false
+    end
 
-  # normalize and
-  def self.fix(string)
-    split(string).each do |tag|
-      create(name: tag) unless exists?(conditions: {name: tag})
+    def count
+      REDIS.zcard KEY_NAME
+    end
+
+    def destroy_all
+      REDIS.zremrangebyrank KEY_NAME, 0, -1
+    end
+
+    def exists?(name)
+      !REDIS.zrank(KEY_NAME, name).nil?
     end
   end
 
