@@ -20,6 +20,12 @@ ul.token-input-list-layouts {
     clear: left;
 }
 
+ul.token-input-list-layouts.focus {
+  border-color: rgba(82, 168, 236, 0.8);
+  @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.1) inset, 0 0 8px rgba(82, 168, 236, 0.6));
+  outline: 0 none;
+}
+
 ul.token-input-list-layouts li input {
     border: 0;
     width: 100px;

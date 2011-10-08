@@ -623,11 +623,21 @@ $.TokenList = function (input, url_or_data, settings) {
 
     // Hide and clear the results dropdown
     function hide_dropdown () {
+        //XXX: monkeypatch
+        var input;
+        if ( (input = $('input:focus').first()) && input.parent('ul') == $(token_list) )
+          $(token_list).removeClass('focus');
+        //XXX: end of monkeypatch
+
         dropdown.hide().empty();
         selected_dropdown_item = null;
     }
 
     function show_dropdown() {
+        //XXX: monkeypatch
+        $(token_list).addClass('focus');
+        //XXX: end of monkeypatch
+
         dropdown
             .css({
                 position: "absolute",

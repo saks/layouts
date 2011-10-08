@@ -17,7 +17,6 @@ $(document).ready(function () {
   function syncWithInput() {
     inputs.each(function(index, input) {
       var input = $(input), tags = input.tokenInput('get'), result = [];
-      console.log(tags);
       for ( var i = tags.length - 1; i >= 0; i-- ) {
         result.push(tags[i].name);
       };
@@ -33,6 +32,14 @@ $(document).ready(function () {
     prePopulate: $("#book_author_tokens").data("pre"),
     onAdd: function() { syncWithInput() },
     onRemove: function() { syncWithInput() }
+  });
+
+  $('.token-input-input-token-layouts input').focus(function() {
+    $(this).parents('ul').addClass('focus')
+  });
+
+  $('.token-input-input-token-layouts input').blur(function() {
+    $(this).parents('ul').removeClass('focus')
   });
 });
 
