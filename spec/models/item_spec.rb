@@ -24,28 +24,45 @@ describe Item do
     end
   end
 
-  it "should create non existing tags" do
-    Tag.count.should be 0
-    FactoryGirl.create :item, tags: dirty_string_of_tags
-    Tag.count.should be 3
-  end
-
   it "should return prepopulate tags data" do
     item = FactoryGirl.create :item, tags: dirty_string_of_tags
 
-    item.prepopulate_tags.should eq parsed_tags.map{|t| {id: t, name: t}}
+    item.prepopulate_tags.should eq parsed_tags.map{|t| {id: t}}
   end
 
-  it "should search by tag" do
-    i1 = FactoryGirl.create :item, tags: 'foo,bar'
-    i2 = FactoryGirl.create :item, tags: 'foo'
-    i3 = FactoryGirl.create :item, tags: 'bar,buz'
+  it "should manage tags on update" do
+    Tag.count_sticked.should be 0
 
-    Item.search_by_tag('foo').should eq [i1, i2]
-    Item.search_by_tag('bar').should eq [i1, i3]
-    Item.search_by_tag('buz').should eq [i3]
-    Item.search_by_tag('foo,buz').to_a.should eq [i1, i2, i3]
-    Item.search_by_tag(dirty_string_of_tags).should eq [i1, i2, i3]
+    it1 = FactoryGirl.create :item, tags: %w[foo]
+
+    Tag.count_sticked.should be 1
+    Tag.score_for('foo').should be 1
+
+    it2 = FactoryGirl.create :item, tags: %w[foo bar]
+
+    Tag.count_sticked.should be 2
+    Tag.score_for('foo').should be 2
+    Tag.score_for('bar').should be 1
+
+    it1.update_attribute :tags, []
+
+    Tag.count_sticked.should be 2
+    Tag.score_for('foo').should be 1
+    Tag.score_for('bar').should be 1
+
+    it2.update_attribute :tags, []
+
+    Tag.count_sticked.should be 0
+    Tag.score_for('foo').should be 0
+    Tag.score_for('bar').should be 0
+
+    it1.update_attribute :tags, %w[foo buz]
+
+    Tag.count_sticked.should be 2
+    Tag.score_for('foo').should be 1
+    Tag.score_for('buz').should be 1
   end
+
+  it "should search by tags with order"
 
 end

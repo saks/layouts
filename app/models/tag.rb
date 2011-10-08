@@ -1,14 +1,13 @@
 module Tag
-  KEY_NAME  = "tags-#{Rails.env}"
-  DELIMITER = /\s?(?:,|;)\s?/
+  CLOUD_KEY                 = "tags_cloud"
+  SITE_IDS_CACHE_KEY_PREFIX = "site_ids_for_tag_%s"
+  DELIMITER                 = /\s?(?:,|;)\s?/
 
   class << self
     def search(term, add_new = false)
       re = Regexp.new term, 'i'
 
-      result = all.grep(re).map do |tag|
-        {id: tag}
-      end
+      result = all.grep(re).map { |tag| {id: tag} }
 
       result << {id: term} if add_new
 
@@ -19,29 +18,43 @@ module Tag
       string.split(DELIMITER).map(&:strip).uniq.delete_if &:empty?
     end
 
-    # normalize and
-    def fix(string)
-      split(string).each { |tag| add tag }
+    def cache_key_for(name)
+      SITE_IDS_CACHE_KEY_PREFIX % name
     end
 
-    def add(tag)
-      REDIS.zincrby KEY_NAME, 1, tag
+    # returns score for specified tag name
+    def score_for(tag_name)
+      (REDIS.zscore(CLOUD_KEY, tag_name) or 0).to_i
+    end
+
+    # increment score for specified tag name
+    def stick(tag_name)
+      REDIS.zincrby CLOUD_KEY, 1, tag_name
+    end
+
+    # descement score for specified tag name
+    def take_off(tag_name)
+      REDIS.zincrby CLOUD_KEY, -1, tag_name
     end
 
     def all
-      REDIS.zrange KEY_NAME, 0, -1, withscores: false
+      REDIS.zrange CLOUD_KEY, 0, -1, withscores: false
     end
 
     def count
-      REDIS.zcard KEY_NAME
+      REDIS.zcount CLOUD_KEY, '-inf', '+inf'
+    end
+
+    def count_sticked
+      REDIS.zcount CLOUD_KEY, 1, '+inf'
     end
 
     def destroy_all
-      REDIS.zremrangebyrank KEY_NAME, 0, -1
+      REDIS.zremrangebyrank CLOUD_KEY, '-inf', '+inf'
     end
 
     def exists?(name)
-      !REDIS.zrank(KEY_NAME, name).nil?
+      !REDIS.zrank(CLOUD_KEY, name).nil?
     end
   end
 

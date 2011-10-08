@@ -8,27 +8,32 @@ describe Tag do
     Tag.split(dirty_string).should == %w[foo bar buz]
   end
 
-  it "fixes tags" do
-    Tag.count.should be 0
-
-    result_of_split = Tag.split dirty_string
-    result = Tag.fix dirty_string
-
-    result.should == result_of_split
-
-    result_of_split.each do |name|
-      Tag.exists?(name).should be true
-    end
-
-    Tag.count.should be 3
-  end
-
   it "sorts search result" do
-    Tag.add 'aac'
-    Tag.add 'aab'
-    Tag.add 'aaa'
+    Tag.stick 'aac'
+    Tag.stick 'aab'
+    Tag.stick 'aaa'
 
     Tag.search('a').map {|t| t[:id]}.should == %w[aaa aab aac]
+  end
+
+  it 'can stick, take off tag and returns right score' do
+    Tag.score_for('foo').should be 0
+    2.times { Tag.stick 'foo' }
+    Tag.score_for('foo').should be 2
+    Tag.take_off 'foo'
+    Tag.score_for('foo').should be 1
+  end
+
+  it "should generate different site cache keys" do
+    key1 = Tag.cache_key_for 'foo'
+    key2 = Tag.cache_key_for 'bar'
+
+    diff = ''
+    key1.each_char.with_index do |char, i|
+      diff << char unless char == key2[i]
+    end
+
+    diff.should eql 'foo'
   end
 
 end
