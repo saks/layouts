@@ -1,4 +1,4 @@
-["Asian", "Contemporary", "Eclectic", "Mediterranean", "Modern", "Traditional", "Tropical", "Bathroom", "Bedroom", "Closet", "Dining Room", "Entry", "Exterior", "Family Room", "Hall", "Home Office", "Kids", "Kitchen", "Landscape", "Laundry Room", "Living Room", "Media Room", "Patio", "Pool", "Porch", "Powder Room", "Staircase", "Wine Cellar"]
+#["Asian", "Contemporary", "Eclectic", "Mediterranean", "Modern", "Traditional", "Tropical", "Bathroom", "Bedroom", "Closet", "Dining Room", "Entry", "Exterior", "Family Room", "Hall", "Home Office", "Kids", "Kitchen", "Landscape", "Laundry Room", "Living Room", "Media Room", "Patio", "Pool", "Porch", "Powder Room", "Staircase", "Wine Cellar"]
 class Tag
   include Mongoid::Document
 
@@ -6,12 +6,16 @@ class Tag
 
   DELIMITER = /\s?(?:,|;)\s?/
 
-  def self.search(term)
+  def self.search(term, add_new)
     re = Regexp.new term, 'i'
 
-    all.find_all { |tag| tag.name.match re }.map do |tag|
+    result = all.find_all { |tag| tag.name.match re }.map do |tag|
       {id: tag.id, name: tag.name}
-    end << {id: "CREATE_#{term}_END", name: term}
+    end
+
+    result << {id: "CREATE_#{term}_END", name: term} if add_new
+
+    result
   end
 
   def self.fix(string)

@@ -12,6 +12,16 @@
 
 body { background: #fff image-url('background-v2.png') 0 0 repeat-x; }
 
+// input constructed by tokeninput
+input#token-input-item_tags, input#token-input-search_term {
+  padding: 1px 8px;
+  border-color: transparent;
+  box-shadow: none !important;
+  @include border-radius(0px);
+  border: none;
+  border-width: 0;
+}
+
 #header {
   height: 91px;
   margin: 0 auto;
@@ -61,5 +71,21 @@ body { background: #fff image-url('background-v2.png') 0 0 repeat-x; }
     height: 180px;
     background: grey;
     margin-bottom: 20px;
+  }
+}
+
+// search inside layout's header
+div.search {
+  .token-input-input-token-layouts {height: 27px;}
+  .token-input-list-layouts {
+    @include border-radius(3px 0 0 3px);
+  }
+  label.add-on {
+    cursor: pointer;
+    float: right;
+    height: 19px;
+    color: $grayDark;
+    @include text-shadow(0 1px 1px rgba(255, 255, 255, .75));
+    @include background(linear-gradient(center top, $white 25%, darken($white, 10%)));
   }
 }

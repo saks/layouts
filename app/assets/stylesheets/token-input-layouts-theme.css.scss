@@ -133,12 +133,3 @@ div.token-input-dropdown-layouts ul li.token-input-selected-dropdown-item-layout
     color: $grayDark;
 }
 
-// input constructed by tokeninput
-input#token-input-item_tags {
-  padding: 1px 8px;
-  border-color: transparent;
-  box-shadow: none !important;
-  @include border-radius(0px);
-  border: none;
-  border-width: 0;
-}

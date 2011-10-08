@@ -6,10 +6,16 @@ Layouts::Application.routes.draw do
   root to: 'items#index'
 
   get '/tags' => lambda { |env|
+    params = Rack::Request.new(env).params
+    args = if params['from_create_q']
+      [params['from_create_q'], true]
+    else
+      [params['q'], false]
+    end
     [
       200,
       {'Content-Type' => 'application/json'},
-      [Tag.search( Rack::Request.new(env).params['q'] ).to_json]
+      [Tag.search( *args ).to_json]
     ]
   }
 

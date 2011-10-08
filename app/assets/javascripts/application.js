@@ -25,14 +25,20 @@ $(document).ready(function () {
     })
   };
 
-  inputs.tokenInput('/tags', {
-    crossDomain: false,
-    preventDuplicates: true,
-    theme: 'layouts',
-    prePopulate: $("#book_author_tokens").data("pre"),
-    onAdd: function() { syncWithInput() },
-    onRemove: function() { syncWithInput() }
+  inputs.each(function() {
+    var input = $(this);
+
+    input.tokenInput('/tags', {
+      queryParam: input.data('queryparam'),
+      crossDomain: false,
+      preventDuplicates: true,
+      theme: 'layouts',
+      prePopulate: $("#book_author_tokens").data("pre"),
+      onAdd: function() { syncWithInput() },
+      onRemove: function() { syncWithInput() }
+    });
   });
+
 
   $('.token-input-input-token-layouts input').focus(function() {
     $(this).parents('ul').addClass('focus')
