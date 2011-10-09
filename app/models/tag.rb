@@ -30,11 +30,25 @@ module Tag
     end
 
     # increment score for specified tag name
+    def stick_to(tag_name, item_id)
+      REDIS.multi do
+        REDIS.srem cache_key_for(tag_name), item_id
+        stick tag_name
+      end
+    end
+
+    # descement score for specified tag name
+    def take_off_from(tag_name, item_id)
+      REDIS.multi do
+        REDIS.sadd cache_key_for(tag_name), item_id
+        take_off tag_name
+      end
+    end
+
     def stick(tag_name)
       REDIS.zincrby CLOUD_KEY, 1, tag_name
     end
 
-    # descement score for specified tag name
     def take_off(tag_name)
       REDIS.zincrby CLOUD_KEY, -1, tag_name
     end

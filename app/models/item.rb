@@ -17,32 +17,14 @@ class Item
 
       not_changed = (new_tags || []) & (old_tags || [])
 
-      (old_tags - not_changed).each do |tag_name|
-        item.remove_tag tag_name
-      end if old_tags
+      (old_tags - not_changed).each { |tag_name| Tag.take_off_from tag_name, item.id } if old_tags
 
-      (new_tags - not_changed).each do |tag_name|
-        item.stick_tag tag_name
-      end if new_tags
+      (new_tags - not_changed).each { |tag_name| Tag.stick_to      tag_name, item.id } if new_tags
     end
   end
 
   def tags=(tags)
     write_attribute :tags, tags.is_a?(String) ? Tag.split(tags) : tags
-  end
-
-  def stick_tag(tag_name)
-    REDIS.multi do
-      REDIS.sadd Tag::cache_key_for(tag_name), id
-      Tag::stick tag_name
-    end
-  end
-
-  def remove_tag(tag_name)
-    REDIS.multi do
-      REDIS.srem Tag::cache_key_for(tag_name), id
-      Tag::take_off tag_name
-    end
   end
 
   def prepopulate_tags
