@@ -92,4 +92,25 @@ describe Tag do
 
     REDIS.exists('key1').should be false
   end
+
+  it "returns data for cloud" do
+    Tag.cloud.should == []
+
+    it1 = FactoryGirl.create :item, tags: 'foo,bar'
+    Tag.cloud.should == %w[foo 1 bar 1]
+
+    it2 = FactoryGirl.create :item, tags: 'bar, buz'
+    Tag.cloud.should == %w[bar 2 foo 1 buz 1]
+
+    it2.tags = 'buz'
+    it2.save
+
+    Tag.cloud.should == %w[foo 1 buz 1 bar 1]
+
+    it2.tags = 'foo'
+    it2.save
+
+    Tag.cloud.should == %w[foo 2 bar 1 buz 0]
+  end
+
 end
