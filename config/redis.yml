@@ -8,7 +8,7 @@ test:
   port: '6379'
   database: 1
 
-tproduction:
+production:
   host: 'localhost'
   port: '6379'
-  database: 100
+  database: 2
