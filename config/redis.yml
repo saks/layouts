@@ -1,14 +1,14 @@
 development:
   host: 'localhost'
   port: '6379'
-  database: 'layouts-dev'
+  database: 0
 
 test:
   host: 'localhost'
   port: '6379'
-  database: 'layouts-test'
+  database: 1
 
 tproduction:
   host: 'localhost'
   port: '6379'
-  database: 'layouts-production'
+  database: 100
