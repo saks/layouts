@@ -1,0 +1,5 @@
+<ul>
+  <%= Tag.cloud.each_slice(2) do |tag_name, weight| %>
+    <li><%= link_to "#{tag_name} x#{weight}", items_path(search_term: tag_name) %></li>
+  <% end %>
+</ul>
