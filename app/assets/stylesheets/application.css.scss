@@ -84,13 +84,12 @@ div.search {
     cursor: pointer;
     float: right;
     height: 19px;
-    color: $grayDark;
     @include text-shadow(0 1px 1px rgba(255, 255, 255, .75));
     @include background(linear-gradient(center top, $white 25%, darken($white, 10%)));
 
   }
   a {
     text-decoration: none;
-    color: $gray;
+    color: $grayDark;
   }
 }
