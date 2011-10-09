@@ -14,6 +14,8 @@ describe Tag do
     Tag.stick 'aaa'
 
     Tag.search('a').map {|t| t[:id]}.should == %w[aaa aab aac]
+    Tag.stick 'aaa'
+    Tag.search('a').map {|t| t[:id]}.should == %w[aaa aab aac]
   end
 
   it 'can stick, take off tag and returns right score' do

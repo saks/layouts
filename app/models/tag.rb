@@ -9,7 +9,7 @@ module Tag
     def search(term, add_new = false)
       re = Regexp.new term, 'i'
 
-      result = all.grep(re).map { |tag| {id: tag} }
+      result = all.sort.grep(re).map { |tag| {id: tag} }
 
       result << {id: term} if add_new
 
