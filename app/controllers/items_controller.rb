@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   def index
     @items = if params[:search_term].present?
       prepare_prepopulated_search_term
-      Item.search_by_tag params[:search_term]
+      Tag.find_items_by params[:search_term]
     else
       Item.all
     end
