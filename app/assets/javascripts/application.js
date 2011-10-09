@@ -50,9 +50,11 @@ $(document).ready(function () {
 
 
   // handlers search from layout
-  $('.search .add-on').click(function() {
-    var query = $.param({search_term: $('#search_term').val(), is_search: 'true'});
-    document.location = '/items' + '?' + query;
-  });
+  $('.search .add-on').click(performSearch)
+  $('.search').keydown(function(event) { 13 == event.keyCode && performSearch() });
+
+  function performSearch() {
+    document.location = '/items' + '?' + $.param({search_term: $('#search_term').val()});
+  }
 });
 
