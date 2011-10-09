@@ -2,6 +2,8 @@ module Tag
   CLOUD_KEY                 = "tags_cloud"
   SITE_IDS_CACHE_KEY_PREFIX = "site_ids_for_tag_%s"
   DELIMITER                 = /\s?(?:,|;)\s?/
+  MINUS_INFINITY            = '-INF'
+  PLUS_INFINITY             = '+INF'
 
   class << self
     def search(term, add_new = false)
@@ -38,23 +40,30 @@ module Tag
     end
 
     def all
-      REDIS.zrange CLOUD_KEY, 0, -1, withscores: false
+      REDIS.zrangebyscore CLOUD_KEY, MINUS_INFINITY, PLUS_INFINITY, withscores: false
     end
 
     def count
-      REDIS.zcount CLOUD_KEY, '-inf', '+inf'
+      REDIS.zcount CLOUD_KEY, MINUS_INFINITY, PLUS_INFINITY
     end
 
     def count_sticked
-      REDIS.zcount CLOUD_KEY, 1, '+inf'
+      REDIS.zcount CLOUD_KEY, 1, PLUS_INFINITY
     end
 
     def destroy_all
-      REDIS.zremrangebyrank CLOUD_KEY, '-inf', '+inf'
+      REDIS.zremrangebyrank CLOUD_KEY, 0, -1
     end
 
     def exists?(name)
       !REDIS.zrank(CLOUD_KEY, name).nil?
+    end
+
+    def seed
+      destroy_all
+      ["Asian", "Contemporary", "Eclectic", "Mediterranean", "Modern", "Traditional", "Tropical", "Bathroom", "Bedroom", "Closet", "Dining Room", "Entry", "Exterior", "Family Room", "Hall", "Home Office", "Kids", "Kitchen", "Landscape", "Laundry Room", "Living Room", "Media Room", "Patio", "Pool", "Porch", "Powder Room", "Staircase", "Wine Cellar"].each do |tag_name|
+        REDIS.zadd CLOUD_KEY, 0, tag_name
+      end
     end
   end
 
