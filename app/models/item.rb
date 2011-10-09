@@ -17,9 +17,15 @@ class Item
 
       not_changed = (new_tags || []) & (old_tags || [])
 
-      (old_tags - not_changed).each { |tag_name| Tag.take_off_from tag_name, item.id } if old_tags
+      if old_tags
+        (old_tags - not_changed).each { |tag_name| Tag.take_off_from tag_name, item.id }
+        Tag.expire_unions_for_tags old_tags
+      end
 
-      (new_tags - not_changed).each { |tag_name| Tag.stick_to      tag_name, item.id } if new_tags
+      if new_tags
+        (new_tags - not_changed).each { |tag_name| Tag.stick_to      tag_name, item.id }
+        Tag.expire_unions_for_tags new_tags
+      end
     end
   end
 
@@ -31,9 +37,15 @@ class Item
     tags.map { |tag| {id: tag} }
   end
 
-  #TODO: add sorting here
-  def self.search_by_tag(string)
-    where :tags.in => Tag.split(string)
+  def self.find_by_ids_preserving_order(ids)
+    items_by_ids = where(:_id.in => ids).inject({}) do |acc, item|
+      acc[item.id.to_s] = item
+      acc
+    end
+
+    ids.map(&:to_s).inject([]) do |acc, id|
+      acc << items_by_ids[id]
+    end
   end
 
 end

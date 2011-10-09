@@ -38,4 +38,58 @@ describe Tag do
     diff.should eql 'foo'
   end
 
+  it "searches by one tag" do
+    Tag.should respond_to :find_items_by
+    Tag.find_items_by(dirty_string).should == []
+
+    item = FactoryGirl.create :item, tags: dirty_string
+
+    item.tags.each do |tag_name|
+      Tag.find_items_by(tag_name).first.should == item
+    end
+  end
+
+  it "searches by more than one tag" do
+    item3 = FactoryGirl.create :item, tags: 'foo,tag2'
+    item2 = FactoryGirl.create :item, tags: 'foo,bar,tag1'
+    item1 = FactoryGirl.create :item, tags: 'foo,bar,buz'
+
+    result = Tag.find_items_by('buz,bar,foo').to_a
+
+    result.should == [item1, item2, item3]
+  end
+
+  it "should update cached union sets" do
+    item3 = FactoryGirl.create :item, tags: 'foo,tag3'
+    item2 = FactoryGirl.create :item, tags: 'foo,bar,tag2'
+    item1 = FactoryGirl.create :item, tags: 'foo,bar,buz'
+
+    Tag.find_items_by('buz,bar,foo,tag1').should == [item1, item2, item3]
+
+    item2.tags = 'foo,bar,tag1,buz'
+    item2.save!
+
+    Tag.find_items_by('buz,bar,foo,tag1').should == [item2, item1, item3]
+  end
+
+  it "should remember union keys for tags" do
+    Tag.remembered_unions_for('foo').size.should == 0
+
+    Tag.remember_cached_union_for 'foo', 'key1'
+
+    remembered = Tag.remembered_unions_for('foo')
+    remembered.size.should == 1
+    remembered.should include 'key1'
+  end
+
+  it "should expire union sets for tags" do
+    REDIS.set 'key1', 'something'
+    Tag.remember_cached_union_for 'foo', 'key1'
+
+    REDIS.exists('key1').should be true
+
+    Tag.expire_unions_for_tags 'foo'
+
+    REDIS.exists('key1').should be false
+  end
 end

@@ -63,6 +63,14 @@ describe Item do
     Tag.score_for('buz').should be 1
   end
 
-  it "should search by tags with order"
+  it "should search by ids with correct order" do
+    it1 = FactoryGirl.create :item
+    it2 = FactoryGirl.create :item
+    it3 = FactoryGirl.create :item
+
+    result = Item.find_by_ids_preserving_order [it3.id, it1.id, it2.id]
+
+    result.should == [it3, it1, it2]
+  end
 
 end
