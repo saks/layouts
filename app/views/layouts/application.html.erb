@@ -28,7 +28,7 @@
             <div class="input-append">
               <%= text_field_tag 'search_term', nil,
                 'class'           => 'span7 autocomplete_with_tags',
-                'data-pre'        => params[:pre_search_term],
+                'data-pre'        => @pre_search_term,
                 'placeholder'     => t('.search_placeholder'),
                 'data-queryParam' => 'q' %>
                 <label class="add-on"><a href="javascript:void(0)">Искать</a></label>

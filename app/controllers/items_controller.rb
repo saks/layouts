@@ -90,7 +90,7 @@ class ItemsController < ApplicationController
   protected
 
   def prepare_prepopulated_search_term
-    params[:pre_search_term] = params[:search_term].split(',').map {|tag| {id: tag, name: tag}}.to_json
+    @pre_search_term = params[:search_term].split(',').map {|tag| {id: tag, name: tag}}.to_json
   end
 
 end
