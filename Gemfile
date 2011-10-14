@@ -13,7 +13,7 @@ gem 'kaminari'
 gem 'aws-s3', git: 'git://github.com/37signals/aws-s3.git', require: 'aws/s3'
 
 gem 'devise'
-gem 'omniauth'
+gem 'omniauth', '0.3.0'
 gem 'oa-facebook'
 gem 'oa-google-openid'
 gem 'oa-mailru_alexandrov'
