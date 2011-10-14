@@ -8,6 +8,8 @@ gem 'bson_ext'
 
 gem 'redis'
 
+gem 'kaminari'
+
 gem 'aws-s3', git: 'git://github.com/37signals/aws-s3.git', require: 'aws/s3'
 
 gem 'devise'

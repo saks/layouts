@@ -2,11 +2,16 @@
 
 <div class="row show-grid">
   <div class="span12 lenta">
+    <%= paginate @items, window: 2 %>
 
-    <% @items.each do |item| %>
-      <%= item.tags %></br>
-      <%# image_tag item.image.url(:medium) %>
-    <% end %>
+    <ul class="media-grid">
+      <% @items.each do |item| %>
+        <li>
+          <%= link_to image_tag(item.image.url :medium), item %>
+        </li>
+      <% end %>
+    </ul>
+    <%= paginate @items, window: 2 %>
   </div>
 
 
