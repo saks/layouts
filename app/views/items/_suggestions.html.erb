@@ -1,0 +1,5 @@
+<ul class="media-grid">
+  <% @item.suggestions.each do |item| %>
+    <li><%= link_to image_tag(item.image.url :thumb), item %></li>
+  <% end %>
+</ul>

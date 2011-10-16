@@ -1,5 +1,16 @@
 <p id="notice"><%= notice %></p>
 
+<div class="row show-grid">
+  <div class="span12 lenta">
+
+    <ul class="media-grid">
+      <li><%= link_to image_tag(@item.image.url :medium), @item %></li>
+    </ul>
+  </div>
+
+
+  <div class="span4 sidebar"><%= render partial: 'suggestions', locals: {item: @item} %></div>
+</div>
 
 <%= link_to 'Edit', edit_item_path(@item) %> |
 <%= link_to 'Back', items_path %>

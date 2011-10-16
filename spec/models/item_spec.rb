@@ -73,4 +73,30 @@ describe Item do
     result.should == [it3, it1, it2]
   end
 
+  describe '#suggestions' do
+    it 'should return other items from suite' do
+      it1 = FactoryGirl.create :item
+      it2 = FactoryGirl.create :item
+
+      suite = FactoryGirl.create :suite, items: [it1, it2]
+
+      result = it1.suggestions.to_a
+
+      result.size.should be 1
+      result.should include it2
+    end
+
+    it 'should return items suggested by tags' do
+      it1 = FactoryGirl.create :item, tags: 'foo'
+      it2 = FactoryGirl.create :item, tags: 'foo,bar'
+      it3 = FactoryGirl.create :item, tags: 'foo,bar,buz'
+
+      result = it1.suggestions.to_a
+
+      result.size.should be 2
+      result.should include it2
+      result.should include it3
+    end
+  end
+
 end

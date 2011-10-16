@@ -23,7 +23,7 @@ module Tag
       tags = split string
 
       from, to = if options
-        limit  = Item.default_per_page
+        limit  = options[:limit] || Item.default_per_page
         offset = limit * ([options[:page].to_i, 1].max - 1)
         [offset, offset + limit - 1]
       else # do not care about pagination
@@ -65,8 +65,9 @@ module Tag
 
 
     # utility function to make array from dirty string with tags
-    def split(string)
-      string.split(DELIMITER).map(&:strip).uniq.delete_if &:empty?
+    def split(tags)
+      return tags if tags.is_a? Array
+      tags.split(DELIMITER).map(&:strip).uniq.delete_if &:empty?
     end
 
 

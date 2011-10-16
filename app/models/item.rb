@@ -4,9 +4,10 @@ class Item
 
   paginates_per 5
 
-  belongs_to :collection
+  belongs_to :suite
   has_mongoid_attached_file :image, styles: {
     medium: ["660x300#", :png],
+    thumb:  ["80x80#",   :png],
   }
 
   field :tags, type: Array, default: []
@@ -38,6 +39,14 @@ class Item
 
   def prepopulate_tags
     tags.map { |tag| {id: tag} }
+  end
+
+  def suggestions
+    if suite.present?
+      suite.items - [self]
+    else
+      Tag.find_items_by(tags, page: 1, limit: 9) - [self]
+    end
   end
 
   def self.find_by_ids_preserving_order(ids)
