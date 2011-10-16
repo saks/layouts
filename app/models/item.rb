@@ -4,6 +4,7 @@ class Item
 
   paginates_per 5
 
+  belongs_to :collection
   has_mongoid_attached_file :image, styles: {
     medium: ["660x300#", :png],
   }
