@@ -18,10 +18,21 @@ module Tag
     end
 
 
-    def find_items_by(string)
+    def find_items_by(string, options = nil)
+      key  = nil
       tags = split string
+
+      from, to = if options
+        limit  = Item.default_per_page
+        offset = limit * ([options[:page].to_i, 1].max - 1)
+        [offset, offset + limit - 1]
+      else # do not care about pagination
+        [0, -1]
+      end
+
       item_ids = if 1 == tags.size
-        REDIS.zrange cache_key_for(tags.first), 0, -1
+        key = cache_key_for tags.first
+        REDIS.zrange key, from, to
 
       elsif tags.size > 1
         key = 'union_by:' + tags.sort.join(',')
@@ -33,12 +44,23 @@ module Tag
           remember_cached_union_for tags, key
         end
 
-        best = REDIS.zrevrange key, 0, -1
+        REDIS.zrevrange key, from, to
       else
         []
       end
 
-      Item.find_by_ids_preserving_order item_ids
+      items = Item.find_by_ids_preserving_order item_ids
+
+      if options
+        # here we should prepare array with length of set cordinality
+        # but it should contain only one page of items, all remaining elements are of nil type
+        total_count = REDIS.zcard key
+        result_for_pagination = Array.new(total_count, nil)
+        result_for_pagination[from .. to] = items
+        result_for_pagination
+      else
+        items
+      end
     end
 
 

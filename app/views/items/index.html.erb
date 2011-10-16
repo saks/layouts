@@ -2,7 +2,7 @@
 
 <div class="row show-grid">
   <div class="span12 lenta">
-    <%= paginate @items, window: 2 %>
+    <%= paginate @items, window: 5 %>
 
     <ul class="media-grid">
       <% @items.each do |item| %>
@@ -11,7 +11,7 @@
         </li>
       <% end %>
     </ul>
-    <%= paginate @items, window: 2 %>
+    <%= paginate @items, window: 5 %>
   </div>
 
 

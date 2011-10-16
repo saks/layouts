@@ -2,6 +2,8 @@ class Item
   include Mongoid::Document
   include Mongoid::Paperclip
 
+  paginates_per 5
+
   has_mongoid_attached_file :image, styles: {
     medium: ["660x300#", :png],
   }

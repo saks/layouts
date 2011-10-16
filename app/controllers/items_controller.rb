@@ -3,14 +3,15 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    all_items = if params[:search_term].present?
+    @items = if params[:search_term].present?
       prepare_prepopulated_search_term
-      Tag.find_items_by params[:search_term]
+
+      items_array = Tag.find_items_by params[:search_term], page: params[:page]
+
+      Kaminari.paginate_array(items_array).page(params[:page]).per(Item.default_per_page)
     else
       Item.all
-    end
-
-    @items = Kaminari.paginate_array(all_items).page(params[:page]).per 5
+    end.page params[:page]
 
     respond_to do |format|
       format.html # index.html.erb

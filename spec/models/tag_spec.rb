@@ -38,38 +38,54 @@ describe Tag do
     diff.should eql 'foo'
   end
 
-  it "searches by one tag" do
-    Tag.should respond_to :find_items_by
-    Tag.find_items_by(dirty_string).should == []
+  describe '#find_items_by' do
 
-    item = FactoryGirl.create :item, tags: dirty_string
+    it "searches by one tag" do
+      Tag.should respond_to :find_items_by
+      Tag.find_items_by(dirty_string).should == []
 
-    item.tags.each do |tag_name|
-      Tag.find_items_by(tag_name).first.should == item
+      item = FactoryGirl.create :item, tags: dirty_string
+
+      item.tags.each do |tag_name|
+        Tag.find_items_by(tag_name).first.should == item
+      end
     end
-  end
 
-  it "searches by more than one tag" do
-    item3 = FactoryGirl.create :item, tags: 'foo,tag2'
-    item2 = FactoryGirl.create :item, tags: 'foo,bar,tag1'
-    item1 = FactoryGirl.create :item, tags: 'foo,bar,buz'
+    it "searches by more than one tag" do
+      item3 = FactoryGirl.create :item, tags: 'foo,tag2'
+      item2 = FactoryGirl.create :item, tags: 'foo,bar,tag1'
+      item1 = FactoryGirl.create :item, tags: 'foo,bar,buz'
 
-    result = Tag.find_items_by('buz,bar,foo').to_a
+      result = Tag.find_items_by('buz,bar,foo').to_a
 
-    result.should == [item1, item2, item3]
-  end
+      result.should == [item1, item2, item3]
+    end
 
-  it "should update cached union sets" do
-    item3 = FactoryGirl.create :item, tags: 'foo,tag3'
-    item2 = FactoryGirl.create :item, tags: 'foo,bar,tag2'
-    item1 = FactoryGirl.create :item, tags: 'foo,bar,buz'
+    it "should update cached union sets" do
+      item3 = FactoryGirl.create :item, tags: 'foo,tag3'
+      item2 = FactoryGirl.create :item, tags: 'foo,bar,tag2'
+      item1 = FactoryGirl.create :item, tags: 'foo,bar,buz'
 
-    Tag.find_items_by('buz,bar,foo,tag1').should == [item1, item2, item3]
+      Tag.find_items_by('buz,bar,foo,tag1').should == [item1, item2, item3]
 
-    item2.tags = 'foo,bar,tag1,buz'
-    item2.save!
+      item2.tags = 'foo,bar,tag1,buz'
+      item2.save!
 
-    Tag.find_items_by('buz,bar,foo,tag1').should == [item2, item1, item3]
+      Tag.find_items_by('buz,bar,foo,tag1').should == [item2, item1, item3]
+    end
+
+    it 'should return array with only one valid page' do
+      page_size = Item.default_per_page
+      items_count = page_size * 3
+      items_count.times { FactoryGirl.create :item, tags: 'foo,bar' }
+      result = Tag.find_items_by 'foo', page: 2
+
+      result.size.should == items_count
+
+      result.compact.size.should == page_size
+
+      Kaminari.paginate_array(result).page(2).per(page_size).compact.size.should == page_size
+    end
   end
 
   it "should remember union keys for tags" do
