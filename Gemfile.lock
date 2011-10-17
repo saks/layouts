@@ -13,6 +13,12 @@ GIT
       fssm (>= 0.2.7)
       sass (~> 3.1)
 
+GIT
+  remote: git://github.com/korobkov/devise-russian.git
+  revision: cb522fc302f402f2d2e5b91f846d66861430a55d
+  specs:
+    devise-russian (1.4.8)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -264,6 +270,7 @@ DEPENDENCIES
   compass_twitter_bootstrap
   database_cleaner
   devise
+  devise-russian!
   factory_girl_rails
   jquery-rails
   kaminari
