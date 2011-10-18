@@ -1,1 +1,1 @@
-Mongoid.add_language("*")
+Mongoid.add_language("ru")

@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.1'
+gem 'rack', '1.3.3'
 
 gem 'mongoid'
 gem 'mongoid-paperclip', require: 'mongoid_paperclip'
@@ -21,6 +22,9 @@ gem 'oa-mailru_alexandrov'
 gem 'oa-vkontakte_alexandrov'
 
 gem 'xml-simple'
+
+
+gem 'translate-rails3', :require => 'translate', :group => :development
 
 # Gems used only for assets and not required
 # in production environments by default.

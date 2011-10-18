@@ -2,6 +2,12 @@ include ActionDispatch::TestProcess
 
 FactoryGirl.define do
 
+  factory :user do |u|
+    u.name 'Test User'
+    u.email 'user@test.com'
+    u.password 'please'
+  end
+
   factory :item do
     tags ['tag1', 'tag2']
     name 'some name'
