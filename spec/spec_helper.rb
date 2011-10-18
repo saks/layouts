@@ -38,6 +38,8 @@ Spork.prefork do
       DatabaseCleaner.clean
       REDIS.flushdb
     end
+
+    config.include Mongoid::Matchers
   end
 end
 

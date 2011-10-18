@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe Item do
 
+  it { should embed_many :comments }
+  it { should belong_to :suite }
+
   let(:dirty_string_of_tags) { ",foo, bar;buz ;foo" }
   let(:parsed_tags) { Tag.split dirty_string_of_tags }
 

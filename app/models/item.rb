@@ -5,6 +5,7 @@ class Item
   paginates_per 5
 
   belongs_to :suite
+  embeds_many :comments
   has_mongoid_attached_file :image, styles: {
     medium: ["660x300#", :png],
     thumb:  ["80x80#",   :png],

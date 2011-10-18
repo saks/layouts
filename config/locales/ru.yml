@@ -15,5 +15,7 @@ ru:
       signout: 'Выйти'
 
   items:
+    suggestions:
+      same: 'Похожие'
     form:
       cancel: 'Отмена'
