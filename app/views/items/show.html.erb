@@ -6,6 +6,30 @@
     <ul class="media-grid">
       <li><%= link_to image_tag(@item.image.url :medium), @item %></li>
     </ul>
+
+    <div class="social_buttons"></div>
+
+    <div class="comments">
+      <div class="form_container">
+        <%= form_for Comment.new, url: add_comment_to_item_path(@item) do |f| %>
+          <%# f.hidden_field :author_avatar_url, current_user.avatar_url %>
+          <%# f.hidden_field :author_name, current_user.name %>
+          <%= f.text_area :text, rows: 3 %>
+          <%= f.submit class: 'btn primary' %>
+        <% end %>
+      </div>
+
+      <div class="items_comments">
+        <% @item.comments.desc(:created_at).each do |comment| %>
+          <div id="<%= comment.id %>" class="comment">
+            <%= image_tag comment.author_avatar_url %>
+            <span><%= comment.author_name or t('guest') %> | <%= comment.created_at %></span>
+            <div class="text"><%= comment.text %></div>
+            <span class="complain"></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 
 

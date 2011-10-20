@@ -2,7 +2,11 @@ Layouts::Application.routes.draw do
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  resources :items
+  resources :items do
+    member do
+      post 'add_comment_to'
+    end
+  end
   root to: 'items#index'
 
   get '/tags' => lambda { |env|

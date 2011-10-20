@@ -93,3 +93,39 @@ div.search {
     color: $grayDark;
   }
 }
+
+// socia buttons on items#show
+.social_buttons {
+  background-color: gray;
+  display: block;
+  height: 50px;
+}
+
+// comments
+.comments {
+  margin: 20px 0;
+
+  .form_container { margin-bottom: 40px;}
+
+  textarea {
+    width: 660px;
+    margin-bottom: 10px;
+  }
+
+  input[type="submit"] {
+    float: right;
+    margin-right: 30px;
+  }
+
+}
+
+.comment {
+  margin: 20px 0;
+  padding-bottom: 10px;
+  background: darken($white, 5%);
+  @include border-radius(5px);
+
+  .text {
+    margin: 10px 0 0 10px;
+  }
+}

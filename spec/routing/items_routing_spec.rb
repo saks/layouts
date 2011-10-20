@@ -27,6 +27,10 @@ describe ItemsController do
       put("/items/1").should route_to("items#update", :id => "1")
     end
 
+    it "routes to #add_comment_to" do
+      post("/items/1/add_comment_to").should route_to("items#add_comment_to", :id => "1")
+    end
+
     it "routes to #destroy" do
       delete("/items/1").should route_to("items#destroy", :id => "1")
     end

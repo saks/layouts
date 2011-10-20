@@ -78,6 +78,12 @@ class ItemsController < ApplicationController
     end
   end
 
+  def add_comment_to
+    item = Item.find(params[:id])
+    comment = item.comments.create params[:comment]
+    redirect_to item_path(item) + '#' + comment.id.to_s
+  end
+
   # DELETE /items/1
   # DELETE /items/1.json
   def destroy

@@ -7,5 +7,7 @@ describe "items/show.html.erb" do
 
   it "renders attributes in <p>" do
     render
+
+    assert_select 'form[action=?]', add_comment_to_item_path(@item)
   end
 end
