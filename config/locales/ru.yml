@@ -20,7 +20,7 @@ ru:
 
   application:
     tag_cloud:
-      tag_cloud: 'Облако тегов'
+      categories: 'Категории'
 
   items:
     index:
