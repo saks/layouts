@@ -18,6 +18,9 @@ ru:
       signout: 'Выйти'
 
   items:
+    show:
+      comments: 'Коментарии'
+      no_name: 'Имя не укаазано'
     suggestions:
       same: 'Похожие'
     form:
