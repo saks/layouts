@@ -17,7 +17,14 @@ ru:
       signup: 'Зарегистрироваться'
       signout: 'Выйти'
 
+
+  application:
+    tag_cloud:
+      tag_cloud: 'Облако тегов'
+
   items:
+    index:
+      lenta: 'Лента'
     show:
       comments: 'Коментарии'
       no_name: 'Имя не укаазано'

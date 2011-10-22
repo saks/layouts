@@ -7,4 +7,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.tokeninput
+//= require scrolly_banner/banner
 //= require_tree .

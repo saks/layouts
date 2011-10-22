@@ -1,8 +1,8 @@
-<div class="slider"><!-- TODO: slider --></div>
+<%= render partial: 'slider' %>
 
 <div class="row show-grid">
   <div class="span12 lenta">
-    <%= paginate @items, window: 5 %>
+    <h5><%= t '.lenta' %></h5>
 
     <ul class="media-grid">
       <% @items.each do |item| %>

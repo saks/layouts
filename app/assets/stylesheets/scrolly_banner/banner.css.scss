@@ -1,0 +1,100 @@
+@import "compass/css3/opacity";
+@import "compass/css3/gradient";
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+@import "compass/css3/transition";
+
+ul.xoxo {
+  margin: 0;
+  li {
+    list-style: none;
+  }
+}
+
+#post-ads {
+	height: 206px;
+	margin: 0 0 30px;
+	position: relative;
+
+
+
+
+}
+#adjuster li, #post-ads a {
+  @include opacity(0);
+}
+#post-ads a.opaque, #post-ads:hover #adjuster li {
+  @include opacity(1);
+}
+#post-ads a {
+	position: absolute;
+	left: 0;
+	z-index: 4;
+}
+#post-ads a.opaque {
+	z-index: 5;
+}
+#bar-container {
+	width: 100%;
+	height: 3px;
+	background: #000;
+	position: absolute;
+	bottom: 3px;
+}
+#bar {
+	width: 0px;
+	height: 3px;
+	background: #B53E7E;
+	background-image: -moz-linear-gradient(left 0, right 0, #7B2A56, #e54e9f);
+	background-image: -webkit-gradient(linear, left 0, right 0, from(#7B2A56), to(#e54e9f));
+}
+#post-ads p {
+	margin: 0;
+}
+#post-ads li {
+	cursor: pointer;
+	display: inline-block;
+  @include border-radius(21px);
+}
+#adjuster li {
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAbCAQAAADrRAY1AAAApUlEQVQY07XRMQ6CUBCEYUM4AoWd8QaGlsrGGOOBrOxpDC0nIXa0hMJ4CmNs6Ck+C3x5cAC3m393NruZlZ1er5WtQqlAIwkg1YFrnNn4YHSI6Aje1hE9FzYX8JBOsjBisJ1k5gXOk0zcQRncuVqt/Ln/WjKtXm8XbmlAFfpX0IVP9kZ8bCa59gan5fgz7k89wCWirQGjIqIzeM2zuYH7PJtSrZZ/ARTpr7Xupw+nAAAAAElFTkSuQmCC) no-repeat 6px -11px #F15E23;
+	width: 21px;
+	height: 21px;
+
+  @include box-shadow(2px 2px 2px rgba(0,0,0,0.2));
+	position: absolute;
+	top: 50%;
+	margin: -10px 10px 0;
+	z-index:6;
+}
+#adjuster #a1 {
+	right: 0;
+	background-position: 50% 5px;
+}
+#adjuster li:hover {
+	background-color: #4D1F41;
+}
+#post-ads a, #adjuster li, #chooser li {
+  @include transition-duration(0.2s);
+  @include transition-timing-function('ease-in-out');
+}
+#chooser {
+	position: absolute;
+	z-index: 6;
+	right: 8px;
+	bottom: 15px;
+}
+#chooser li {
+	border: 2px solid rgba(255,255,255,0.4);
+	background: rgba(155,155,155,0.6);
+	width: 10px;
+	height: 10px;
+	margin: 0 5px;
+}
+#chooser li:hover {
+	border-color: #fff;
+}
+#chooser .displaying {
+	background: rgba(241,94,35,0.6);
+}
+

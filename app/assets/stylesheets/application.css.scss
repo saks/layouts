@@ -4,6 +4,7 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
  *= require token-input
+ *= require scrolly_banner/banner
 */
 @import "variables";
 @import "compass_twitter_bootstrap";
@@ -65,6 +66,7 @@ input#token-input-item_tags, input#token-input-search_term {
 }
 
 #site {
+  width: 980px;
   .slider {
     display: block;
     width: 100%;
@@ -72,6 +74,35 @@ input#token-input-item_tags, input#token-input-search_term {
     background: grey;
     margin-bottom: 20px;
   }
+}
+
+@mixin sexy_pane {
+  @include box-shadow(0 2px 5px rgba(0, 0, 0, 0.15));
+  background-color: #F7F7F7;
+  border-radius: 5px;
+}
+
+.lenta ul.media-grid {
+  @include sexy_pane;
+  padding-top: 20px;
+  min-height: 100px;
+}
+
+.sidebar {
+  ul {
+    width: 240px;
+    margin: 0;
+    padding-top: 20px;
+    @include sexy_pane;
+  }
+}
+
+.tag_cloud a {
+  display: block;
+  width: 80%;
+  margin-bottom: 10px;
+  &:hover {text-decoration: none;}
+  span { float: right; }
 }
 
 // search inside layout's header
@@ -122,8 +153,7 @@ div.search {
 .comment {
   margin: 20px 0;
   padding-bottom: 10px;
-  background: darken($white, 5%);
-  @include border-radius(5px);
+  @include sexy_pane;
 
   .text {
     margin: 10px 0 0 10px;

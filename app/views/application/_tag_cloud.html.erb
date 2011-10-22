@@ -1,5 +1,6 @@
-<ul>
+<h5><%= t '.tag_cloud' %></h5>
+<ul class="media-grid tag_cloud">
   <%= Tag.cloud.each_slice(2) do |tag_name, weight| %>
-    <li><%= link_to "#{tag_name} x#{weight}", items_path(search_term: tag_name) %></li>
+    <li><%= link_to "#{tag_name} <span>x#{weight}</span>".html_safe, items_path(search_term: tag_name) %></li>
   <% end %>
 </ul>
