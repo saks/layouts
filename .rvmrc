@@ -1,5 +1,5 @@
 # setup gemset
-rvm use ruby-1.9.2-p290@layouts
+rvm use ruby-1.9.3-p0@layouts
 
 # add Rails.root/bin on the top of $PATH
 [ -d './bin' ] && export PATH=`pwd`/bin:$PATH
